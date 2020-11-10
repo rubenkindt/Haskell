@@ -1,3 +1,5 @@
+<b> For the course tudie van declaratieve talen (B-KUL-H04H5B) </b>
+
 in admin powershell
 	Set-ExecutionPolicy Bypass -Scope Process
 	
