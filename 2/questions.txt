@@ -1,0 +1,13 @@
+page 37
+line 1 : dataTree a=Empty|Branch a(Tree a) (Tree a)
+line 2 : foldTree:: (e→a→a→a)→a→Tree e→a
+line 3 : foldTree f z Empty=z
+line 4 : foldTree f z(Branch x l r) =f x (foldTree f z l)
+										 (foldTree f z r)
+should the 'e' on line 2 not be an 'a' ? Since it should be the same type as the second 'x' on line 5 (and thoses 'x' are definde as 'a'-type on line 1)
+
+
+
+Less relevant but i would like to know what the function sign does on page 42, I was unable to find it online.
+map(λx→sign x) [−10,0,20]
+[−1,0,1]

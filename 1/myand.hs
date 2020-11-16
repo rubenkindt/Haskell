@@ -1,4 +1,4 @@
 myand :: [Bool] -> Bool
-myand [] = False
+myand [] = True
 myand [x] = x
 myand (b:bTail) = b && myand bTail
