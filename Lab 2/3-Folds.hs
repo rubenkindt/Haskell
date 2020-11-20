@@ -20,16 +20,28 @@ foldInts fn base (x:xs) = fn x (foldInts fn base xs)
 
 
 myFoldl :: (b -> a -> b) -> b -> [a] -> b
-myFoldl fn base [] = base
-myFoldl fn base (x:xs) = fn (myFoldl fn base xs) x
+myFoldl fn basec [] = basec
+myFoldl fn basec (x:xs) = myFoldl fn (fn basec x) xs
 
 myFoldr :: (a -> b -> b) -> b -> [a] -> b
-myFoldr fn base [] = base
-myFoldr fn base (x:xs) = fn x (myFoldr fn base xs)
+myFoldr fn basec [] = basec
+myFoldr fn basec (x:xs) = fn x (myFoldr fn basec xs)
 
 readInBase :: Int -> [Int] -> Int
+readInBase base list = myFoldl (\a b ->  b + base * a ) 0 list 
+
+{-
+only works reverce
+readInBase :: Int -> [Int] -> Int
 readInBase base (x:[]) = x
-readInBase base (x:xs) = x +base * readInBase base xs 
+readInBase base (x:xs) = x + base * readInBase base xs 
+-}
+
+-- attempt made, but failed
+readInBase' :: Int -> [Int] -> Int
+readInBase' base (x:[]) = x + base
+readInBase' base (x:xs) = readInBase' (base * x) xs 
+
 
 myMap :: (a -> b) -> [a] -> [b]
 myMap fn [] = []

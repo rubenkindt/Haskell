@@ -1,4 +1,4 @@
-
+-- will be discused at 5:30
 module Template where
 
 amountsEuro :: [Int]
@@ -8,9 +8,11 @@ changesEuro :: Int -> [[Int]]
 changesEuro = changes amountsEuro
 
 changes :: [Int] -> Int -> [[Int]]
-changes [] _ =[[]]
-changes _ 0 = [[0]]
-changes list 1 = [[1]]
+changes _ 0 = [[]]
+changes [] _ = []
+changes (x:xs) n 
+ | x>n = changes xs n
+ | otherwise = changes (x:xs) (n-x)
 
  
 
