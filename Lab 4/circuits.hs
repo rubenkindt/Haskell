@@ -149,8 +149,7 @@ combinations 3 = [[False,False,False],[False,False,True],[False,True,False],[Fal
 tabulate :: Circuit -> IO ()
 tabulate c = myPrint c ([  (merge (inputs c) com) ++ [("O", (simulate c (merge (inputs c) com)) )]  | com <- combinations size  ])
   where 
-    size =length (inputs c)
-
+    size =length $ inputs c
 
 merge :: [a] -> [b] -> [(a,b)]
 merge (x:xs) (y:ys) = [(x, y)] ++ (merge xs ys)
@@ -163,7 +162,7 @@ myPrint c list = myHeader c >> myBody list
 --myPrint _ _ = return ()
 
 myHeader :: Circuit -> IO ()
-myHeader c = (putStr (concat (map (++ " ") (getInputs c )))) >> putStrLn "| Output" 
+myHeader c = (putStr . concat . map (++ " ") $ getInputs c ) >> putStrLn "| Output" 
 --myHeader _ = return ()
 
 myBody :: [[(a,Bool)]] -> IO ()
