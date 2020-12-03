@@ -168,7 +168,16 @@ renderFractal program expansion n d file  =
 -- Bounding Box
 -- ~~~~~~~~~~~~
 boundingBox :: [Line] -> (Point,Point)
-boundingBox = error "not implemented"
+boundingBox ((p1,p2):[])= (p1,p2) 
+boundingBox ((p1,p2):xs)= (mymin,mymax)
+ where 
+  (q1,q2)=boundingBox xs
+  mymin = if p1<=q1 then p1 else q1
+  mymax = if p2>=q2 then p2 else q2
+
+-- functie te schrijven met
+-- foldl1 foldr1 
+-- zip en unzip
 
 -- Animations
 -- ~~~~~~~~~~
@@ -176,7 +185,10 @@ boundingBox = error "not implemented"
 type Animation = [Turtle]
 
 animate :: Turtle -> Animation
-animate = error "not implemented"
+animate (Turn angle t)= ((Turn angle Done) : (map (\ tu -> (Turn angle Done) >>> tu ) (animate t)))
+animate (Step dist t)=  ((Turn dist  Done) : (map (\ tu -> (Step dist  Done) >>> tu ) (animate t)))
+animate (Done)= [Done]
+
 
 -- Discontinuous drawing
 -- ~~~~~~~~~~~~~~~~~~~~~

@@ -151,15 +151,19 @@ tabulate c = myPrint c ([  (merge (inputs c) com) ++ [("O", (simulate c (merge (
   where 
     size =length $ inputs c
 
+-- dit is de ZIP functie
 merge :: [a] -> [b] -> [(a,b)]
-merge (x:xs) (y:ys) = [(x, y)] ++ (merge xs ys)
-merge _ _ = []
+merge (x:xs) (y:ys) = [(x, y)] ++ (merge xs ys) -- cleaner (x,y) : (merge xs ys)
+--merge _ _ = []
+
+-- 
 
 
 
 myPrint :: Circuit -> [[(a,Bool)]] -> IO ()
 myPrint c list = myHeader c >> myBody list
 --myPrint _ _ = return ()
+
 
 myHeader :: Circuit -> IO ()
 myHeader c = (putStr . concat . map (++ " ") $ getInputs c ) >> putStrLn "| Output" 
@@ -172,6 +176,7 @@ myBody (oneLineList:xs) = oneLine oneLineList >> myBody xs
 oneLine :: [(a,Bool)] -> IO ()
 oneLine ((letter,bool):[])= putStr "| " >> putStrLn (boolToInt bool)
 oneLine ((letter,bool):xs)= putStr (boolToInt bool) >> putStr " " >> oneLine xs
+oneLine [] = return ()
 --oneLine _ = return ()
 
 boolToInt :: Bool -> String
