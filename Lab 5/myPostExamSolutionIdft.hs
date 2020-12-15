@@ -56,21 +56,50 @@ dft list = Four (dftSignal2ComplexDouble list)
 
 dftSignal2ComplexDouble :: Signal -> [Complex Double]
 dftSignal2ComplexDouble [] = []
-dftSignal2ComplexDouble (x:[])  = [ sum [ (helper x k n len)  |k<- kList, let x =[x]!!k] | n<-nList]
+dftSignal2ComplexDouble (x:[])  = [ sum [ (helperDft x k n len)  |k<- kList, let x =[x]!!k] | n<-nList]
  where 
   len = length [x]
   nList = [0]
   kList = [0] 
 
-dftSignal2ComplexDouble xlist =[ sum [(helper x k n len) | k <- kList, let x =xlist!!k]  | n<-nList]
+dftSignal2ComplexDouble xlist =[ sum [(helperDft x k n len) | k <- kList, let x =xlist!!k]  | n<-nList]
  where 
   len = length xlist
   nList = [0..(len-1)]
   kList = [0..(len-1)] 
 
 
-helper :: Double -> Int -> Int -> Int -> Complex Double
-helper x k n len = ((x2) *(exp ((-2)*pi*k2*n2*(1/len2)*(0:+1))))
+helperDft :: Double -> Int -> Int -> Int -> Complex Double
+helperDft x k n len = ((x2) *(exp ((-2)*pi*k2*n2*(1/len2)*(0:+1))))
+ where 
+  x2= d2rc x
+  k2= i2rc k
+  n2= i2rc n
+  len2= i2rc len
+
+
+-- | Naive inverse discrete Fourier transform
+idft :: Fourier -> Signal
+idft (Four fList)= idftF2Sig fList
+
+
+
+idftF2Sig :: [Complex Double] -> [Double]
+idftF2Sig [] = []
+idftF2Sig (x:[])  = [ sum [ (1*len) * (helperIdft x k n len)  | n<-nList, let x =[x]!!k] | k<-kList ]
+ where 
+  len = length [x]
+  nList = [0]
+  kList = [0] 
+idftF2Sig xlist =[ sum [(1*len) * (helperIdft x k n len) | n <- nList, let x =xlist!!k]  | k<-kList ]
+ where 
+  len = length xlist
+  nList = [0..(len-1)]
+  kList = [0..(len-1)] 
+
+
+helperIdft :: Complex Double -> Int -> Int -> Int -> Double
+helperIdft x k n len = ((x2) *(exp ((2)*pi*k2*n2*(1/len2)*(0:+1))))
  where 
   x2= d2rc x
   k2= i2rc k

@@ -45,7 +45,8 @@ instance AlmostEq Double where
   a ~= b = abs(a-b)<(1e-14)
 
 instance AlmostEq (Complex Double) where
-  a ~= b = abs(magnitude(a-b))<(1e-14)
+  a ~= b = abs(magnitude(a-b))<(1e-14) -- wrong
+--a ~= b = magnitude (a-b) <(1e-14) 
 
 instance AlmostEq a => AlmostEq [a] where
   [] ~= [] = True
