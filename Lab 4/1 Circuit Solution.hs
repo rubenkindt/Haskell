@@ -13,15 +13,23 @@ data Circuit
   | XOR Circuit Circuit
 
 -- Task 1b
-
+cinput :: String -> Circuit
 cinput = Input
+
+cnot :: Circuit -> Circuit 
 cnot = NOT
+
+cand :: Circuit -> Circuit -> Circuit
 cand = AND
+
+cor :: Circuit -> Circuit -> Circuit
 cor = OR
+
+cxor :: Circuit -> Circuit -> Circuit
 cxor = XOR
 
 -- Task 1c
-
+example :: Circuit
 example = cor (cand (cinput "x") (cinput "y")) (cxor (cnot (cinput "z")) (cinput "x"))
 
 -- Task 1d
@@ -35,14 +43,14 @@ instance Show Circuit where
   show (Input v)   = v
   show (NOT c)     = "NOT(" ++ show c ++ ")"
   show (AND c1 c2) = "AND(" ++ show c1 ++ "," ++ show c2 ++ ")"
-  show (OR c1 c2) = "OR(" ++ show c1 ++ "," ++ show c2 ++ ")"
+  show (OR c1 c2)  = "OR("  ++ show c1 ++ "," ++ show c2 ++ ")"
   show (XOR c1 c2) = "XOR(" ++ show c1 ++ "," ++ show c2 ++ ")"
 
 -- Task 2b
 
 simplify :: Circuit -> Circuit
-simplify (Input c) = Input c
-simplify (NOT c)   = NOT (simplify c)
+simplify (Input c)   = Input c
+simplify (NOT c)     = NOT (simplify c)
 simplify (AND c1 c2) = AND (simplify c1) (simplify c2)
 simplify (OR c1 c2)  = NOT (AND (NOT (simplify c1)) (NOT (simplify c2)))
 simplify (XOR c1 c2) = simplify (OR (AND c1 (NOT c2)) (AND (NOT c1) c2))
@@ -62,7 +70,7 @@ gateDelay :: Circuit -> Int
 gateDelay (Input _)   = 0
 gateDelay (NOT c)     = 1 + gateDelay c
 gateDelay (AND c1 c2) = 1 + max (gateDelay c1) (gateDelay c2)
-gateDelay (OR c1 c2) = 1 + max (gateDelay c1) (gateDelay c2)
+gateDelay (OR c1 c2)  = 1 + max (gateDelay c1) (gateDelay c2)
 gateDelay (XOR c1 c2) = 1 + max (gateDelay c1) (gateDelay c2)
 
 -- Task 2e
