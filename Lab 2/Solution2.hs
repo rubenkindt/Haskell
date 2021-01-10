@@ -8,6 +8,10 @@ mySum :: [Integer] -> Integer
 mySum []     = 0
 mySum (x:xs) = x + mySum xs
 
+-- added By Ruben
+mySum2 :: [Integer] -> Integer
+mySum2 list = foldr ( \x xs-> (+) x xs) 0 list
+
 myProduct :: [Integer] -> Integer
 myProduct []     = 1
 myProduct (x:xs) = x * myProduct xs
@@ -24,7 +28,12 @@ myFoldr _f base []     = base
 myFoldr  f base (x:xs) = f x (myFoldr f base xs)
 
 readInBase :: Int -> [Int] -> Int
-readInBase base digits = myFoldl (\acc d -> acc*base + d) 0 digits
+readInBase nrbase digits = myFoldl (\acc d -> acc*nrbase + d) 0 digits
+
+
+--(\acc d -> acc*base + d) 0 FirstDigit        -> 0*base+FirstDigit 
+--(\acc d -> acc*base + d) FirstDigit SecDigit -> FirstDigit*base+SecDigit 
+
 
 myMap :: (a -> b) -> [a] -> [b]
 myMap _ []     = []

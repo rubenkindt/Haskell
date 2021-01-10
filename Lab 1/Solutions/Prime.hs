@@ -28,6 +28,10 @@ floorMono = floor
 floorSquare :: Int -> Int
 floorSquare n = floorMono $ sqrtMono $ i2d n
 
+-- added by Ruben
+floorSquare2 :: Int -> Int
+floorSquare2 = floorMono . sqrtMono . i2d
+
 fastSieve :: Int -> [Int]
 fastSieve m = f [2..(m-1)]       {- (\\) is set-difference for unordered lists -}
   where
