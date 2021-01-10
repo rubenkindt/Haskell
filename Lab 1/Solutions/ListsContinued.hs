@@ -30,3 +30,7 @@ sumInts a b = sum [a..b]
 removeMultiples :: Int -> [Int] -> [Int]
 removeMultiples x list = [y | y <- list, y `mod` x /= 0]
 
+-- added by Ruben
+removeMultiples2 :: Int -> [Int] -> [Int]
+removeMultiples2 x list = filter (\ y -> (mod y x) /=0) list 
+
