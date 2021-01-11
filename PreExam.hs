@@ -3,7 +3,24 @@
 ------------------------------------------------------
 ------------------------------------------------------
 ------------------------------------------------------
+   (before,aft) = break (\(W str) -> (length str) > nr) list
+   
 ------------------------------------------------------
+
+--een guard kan ej gebruiken zonder de test al te definieren 
+-- je scrijft de test bij de 
+--"| test ="
+wrap :: Int -> [LineItem] -> [[LineItem]]
+wrap lineWidth = go [] (lineWidth + 1)
+  -- One extra space to offset the space of the first word
+  where
+    go acc _          [] = [reverse acc]
+    go acc spaceLeft (W w:is)
+        | length w + 1 <= spaceLeft || length w > lineWidth
+        = go (W w:acc) (spaceLeft - length w - 1) is
+        | otherwise
+        = reverse acc : go [] (lineWidth + 1) (W w:is)
+		
 ------------------------------------------------------
 
 infix 4 ~=
